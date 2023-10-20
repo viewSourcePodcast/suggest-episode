@@ -75,7 +75,7 @@
                             <x-text-input id="suggestion" name="suggestion" required
                                 class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"
                                 value="{{ old('suggestion') }}" />
-                            <x-input-error :messages="$errors->get('first_name')" />
+                            <x-input-error :messages="$errors->get('suggestion')" />
 
                             <div class="flex justify-end">
                                 <x-primary-button class="ml-4">
