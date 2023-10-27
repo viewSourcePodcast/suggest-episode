@@ -71,9 +71,8 @@
 
                         <form method="POST" action="{{ route('suggestions.store') }}" class="space-y-6">
                             @csrf
-
-                            <x-text-input id="suggestion" name="suggestion" required
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"
+                            <x-input-label for="suggestion" :value="__('Suggestion')" />
+                            <x-text-input id="suggestion" name="suggestion" class="w-full" required
                                 value="{{ old('suggestion') }}" />
                             <x-input-error :messages="$errors->get('suggestion')" />
 
