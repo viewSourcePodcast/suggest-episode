@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
     // Routes to handle form submissions.
     Route::post('/suggestions', [SuggestionController::class, 'store'])->name('suggestions.store');
     Route::delete('/suggestions/{suggestion}', [SuggestionController::class, 'destroy'])->name('suggestions.destroy');
+
+    // Routes to handle upvotes.
+    Route::post('/suggestions/{suggestion}/upvote', [SuggestionController::class, 'upvote'])->name('suggestions.upvote');
 });
 
 require __DIR__ . '/auth.php';

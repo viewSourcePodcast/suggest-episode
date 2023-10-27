@@ -9,7 +9,10 @@ class SuggestionController extends Controller
 {
     public function index(Request $request)
     {
-        $suggestions = Suggestion::orderBy('likes', 'desc')->get();
+
+        // Get suggestions and order by number of upvotes.
+        $suggestions = Suggestion::withCount('upvotes')->orderBy('upvotes_count', 'desc')->get();
+
         return view('welcome', ['suggestions' => $suggestions]);
     }
 
@@ -20,12 +23,16 @@ class SuggestionController extends Controller
             'suggestion' => 'required',
         ]);
 
-        Suggestion::create(
+        // Create the suggestion.
+        $suggestion = Suggestion::create(
             [
                 'suggestion' => $request->suggestion,
                 'user_id' => $request->user()->id,
             ]
         );
+
+        // The author should immediately upvote their own suggestion.
+        $suggestion->upvotes()->attach($request->user()->id);
 
         return redirect()->route('suggestions.index')->with('success', 'Suggestion added!');
     }
@@ -36,5 +43,20 @@ class SuggestionController extends Controller
         $suggestion->delete();
 
         return redirect()->route('suggestions.index')->with('success', 'Suggestion deleted!');
+    }
+
+
+    public function upvote(Request $request, Suggestion $suggestion)
+    {
+
+        // Check if they've already upvoted, if so, redirect with error.
+        if ($suggestion->upvotes()->where('user_id', $request->user()->id)->exists()) {
+            return redirect()->route('suggestions.index')->with('error', 'You have already upvoted this suggestion!');
+        }
+
+        // Attach the upvote.
+        $suggestion->upvotes()->attach($request->user()->id);
+
+        return redirect()->route('suggestions.index')->with('success', 'Suggestion upvoted!');
     }
 }
