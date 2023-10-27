@@ -13,11 +13,15 @@ class Suggestion extends Model
     protected $fillable = [
         'suggestion',
         'user_id',
-        'likes',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function upvotes()
+    {
+        return $this->belongsToMany(User::class, 'upvotes')->withTimestamps();
     }
 }
