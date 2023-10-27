@@ -14,6 +14,9 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Fathom - beautiful, simple website analytics -->
+    <script src="https://cdn.usefathom.com/script.js" data-site="MNJZOJUH" defer></script>
+    <!-- / Fathom -->
 </head>
 
 <body class="font-sans antialiased">
